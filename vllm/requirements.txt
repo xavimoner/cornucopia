@@ -1,0 +1,6 @@
+vllm
+deepseek
+requests
+playwright
+pandas
+huggingface_hub

@@ -1,0 +1,22 @@
+# Framework principal
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# Validació de dades i configuració
+pydantic==2.5.3
+pydantic-settings==2.0.3
+
+# Base de dades PostgreSQL
+SQLAlchemy==2.0.25
+asyncpg==0.29.0  # Driver per PostgreSQL asíncron
+
+# Per fer peticions HTTP al servidor vLLM
+httpx==0.27.0
+
+# Models de llenguatge i IA
+transformers==4.38.2  # Per manejar models LLM
+torch==2.1.2  # **Eliminat el `+cpu`, la versió CPU es descarregarà manualment**
+
+# Llibreries matemàtiques
+numpy==1.26.3  # Per manipulació de dades
+scipy==1.11.4  # Per operacions matemàtiques avançades

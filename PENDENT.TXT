@@ -1,0 +1,11 @@
+docker compose down --remove-orphans
+docker compose up -d
+curl -X POST http://localhost:8000/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+    "prompt": "Explica què és el deep learning en 2 frases.",
+    "max_tokens": 100
+  }'
+
+

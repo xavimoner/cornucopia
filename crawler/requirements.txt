@@ -1,0 +1,16 @@
+# pip install -r requirements.txt
+
+selenium>=4.10.0
+beautifulsoup4>=4.10.0
+requests>=2.25.0
+PyPDF2>=3.0.0
+lxml>=4.6.0
+playwright>=1.10.0
+pandas
+smolagents
+
+# playwright install
+# playwright install-deps
+# sudo apt install npm
+# npx playwright codegen https://www.cdti.es
+

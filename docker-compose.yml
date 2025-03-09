@@ -1,0 +1,73 @@
+# ./docker-compose.yml
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+      - vllm
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=development  # O 'production' segons correspongui
+
+  crawler:
+    build: ./crawler
+    container_name: crawler
+    volumes:
+      - ./crawler:/app
+    ports:
+      - "5001:5001"
+    command: ["python", "crawler_cdti.py"]
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=development  # O 'production' segons correspongui
+
+  db:
+    image: postgres:latest
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: cornucopia
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cornucopia_network
+
+
+  vllm:
+    build: ./vllm
+    container_name: vllm
+    ports:
+      - "5000:5000"
+    environment:
+      - VLLM_MODEL=deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}
+      - VLLM_USE_GPU=false
+      - VLLM_TRUST_REMOTE_CODE=true
+      - VLLM_CPU_KVCACHE_SPACE=2  # Ajusta la cache per CPU
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    command: ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
+
+networks:
+  cornucopia_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  models:
