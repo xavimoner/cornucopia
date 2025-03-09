@@ -27,4 +27,4 @@ COPY . .
 EXPOSE 5001
 
 # Comando d'inici
-CMD ["python", "crawler_cdti.py"]
+CMD ["python", "main.py"]

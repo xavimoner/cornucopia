@@ -23,10 +23,13 @@ services:
       - ./crawler:/app
     ports:
       - "5001:5001"
-    command: ["python", "crawler_cdti.py"]
+    command: ["tail", "-f", "/dev/null"] 
+    #command: ["python", "main.py"]
+    # 
     networks:
       - cornucopia_network
-    restart: unless-stopped
+    # restart: unless-stopped
+    restart: no
     environment:
       - ENVIRONMENT=development  # O 'production' segons correspongui
 
