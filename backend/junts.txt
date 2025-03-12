@@ -1,0 +1,69 @@
+# backend/main.py
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+import db  # Importació absoluta
+import models  # Importació absoluta
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Backend funciona!"}
+
+# Crear la base de dades (si no existeix)
+db.Base.metadata.create_all(bind=db.engine)
+
+# Obtenir un projecte específic per ID
+@app.get("/proyectos/{proyecto_id}")
+def read_proyecto(proyecto_id: int, db: Session = Depends(db.get_db)):
+    proyecto = db.query(models.Proyecto).filter(models.Proyecto.id == proyecto_id).first()
+    return proyecto
+# backend/db.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import base  # Canvia de .base a base per una importació absoluta
+
+# Configura la connexió a la base de dades
+SQLALCHEMY_DATABASE_URL = "postgresql://admin:adminpass@db:5432/cornucopia"
+
+# Crear el motor de la base de dades
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"host": "db"})
+
+# Crear una sessió de la base de dades
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    # Crear una nova sessió per cada petició
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# backend/models.py
+from sqlalchemy import Column, Integer, String, Date
+import base  # Canvia de .db a base
+
+class Proyecto(base.Base):  # Usa Base des de base.py
+    __tablename__ = "proyectos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    organismo = Column(String, index=True)
+    nombre = Column(String)
+    linea = Column(String)
+    fecha_inicio = Column(Date)
+    fecha_fin = Column(Date)
+    anio = Column(Integer)
+    area = Column(String)
+    presupuesto_minimo = Column(String)
+    presupuesto_maximo = Column(String)
+    duracion_minima = Column(String)
+    duracion_maxima = Column(String)
+    tipo_financiacion = Column(String)
+    forma_y_plazo_de_cobro = Column(String)
+    minimis = Column(String)
+# backend/base.py
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+

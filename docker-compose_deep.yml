@@ -15,9 +15,6 @@ services:
     restart: unless-stopped
     environment:
       - ENVIRONMENT=development  # O 'production' segons correspongui
-    # Espera fins que la base de dades estigui disponible
-    command: ["sh", "-c", "until nc -z -v -w30 db 5432; do echo 'Esperant DB...'; sleep 1; done; uvicorn main:app --host 0.0.0.0 --port 8000"]
-
 
   crawler:
     build: ./crawler
@@ -36,10 +33,6 @@ services:
     environment:
       - ENVIRONMENT=development  # O 'production' segons correspongui
 
-    
-
-
-
   db:
     image: postgres:latest
     container_name: db
@@ -51,10 +44,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-        - postgres_data:/var/lib/postgresql/data
-        - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql
-        - ./db/install_pgvector.sh:/docker-entrypoint-initdb.d/install_pgvector.sh
-        - ./db/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql 
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql
+      - ./db/install_pgvector.sh:/docker-entrypoint-initdb.d/install_pgvector.sh
+ 
 
     networks:
       - cornucopia_network
@@ -76,8 +69,7 @@ services:
     networks:
       - cornucopia_network
     restart: unless-stopped
-    # command: ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
-    command: ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "Qwen/Qwen2.5-3B-Instruct", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
+    command: ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
 
 networks:
   cornucopia_network:

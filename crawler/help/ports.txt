@@ -1,7 +1,0 @@
-Resum de les passes:
-
-    Reinicia el servei Docker: sudo systemctl restart docker.
-    Elimina contenidors aturats i orfes: docker container prune.
-    Verifica que el port 8001 està lliure: sudo lsof -i :8001.
-    docker compose down --remove-orphans
-    Reinicia els contenidors: docker compose up -d.
