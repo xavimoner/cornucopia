@@ -1,0 +1,87 @@
+# ./vllm/Dockerfile
+# Utilizar una imagen base compatible con Python 3.12
+FROM ubuntu:24.04
+
+WORKDIR /app
+
+# Instalamos dependencias básicas y pip3
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-venv \
+    chromium-driver \
+    libxrender1 libxshmfence1 libxcomposite1 libxcb1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear un entorno virtual
+RUN python3 -m venv /venv
+
+# Asegurarnos de usar el pip del entorno virtual
+ENV PATH="/venv/bin:$PATH"
+
+# Copiar el archivo de dependencias
+COPY requirements.txt requirements.txt
+
+# Actualizar pip, setuptools y wheel en el entorno virtual
+RUN pip install --upgrade pip setuptools wheel
+
+# Instalar dependencias de Python dentro del entorno virtual
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install smolagents[vllm]
+RUN pip install 'accelerate>=0.26.0'  # Añade esta línea
+
+# Instalar Playwright
+RUN playwright install --with-deps
+
+# Copiar el código fuente
+COPY . .
+
+# Exponer el puerto
+EXPOSE 5001
+
+CMD ["python", "main.py"]
+
+RUN apt-get update && apt-get install -y gcc-12 g++-12
+
+
+# Actualizar alternativas para usar gcc-12
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 10 \
+    --slave /usr/bin/g++ g++ /usr/bin/g++-12
+
+RUN apt-get update && apt-get install -y git
+
+# Instalar vLLM desde código fuente
+RUN git clone https://github.com/vllm-project/vllm.git vllm_source && \
+    cd vllm_source && \
+    pip install --upgrade pip && \
+    pip install "cmake>=3.26" wheel packaging ninja "setuptools-scm>=8" numpy && \
+    pip install -v -r requirements/cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu && \
+    VLLM_TARGET_DEVICE=cpu python setup.py install
+
+# Configurar Hugging Face cache
+RUN mkdir -p /root/.cache/huggingface
+VOLUME /root/.cache/huggingface
+
+# Instalar transformers y otros paquetes de Hugging Face
+RUN pip install torch transformers huggingface-hub vllm
+
+# Añadir las dependencias de vllm
+RUN pip install smolagents[vllm]
+
+RUN apt-get update && apt-get install -y build-essential
+
+
+# Descargar el modelo DeepSeek-R1-Distill-Qwen-1.5B
+# RUN python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; \
+#    AutoModelForCausalLM.from_pretrained('deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B'); \
+#    AutoTokenizer.from_pretrained('deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B');"
+
+# Descargar el modelo Qwen/Qwen2.5-3B-Instruct"
+#RUN python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; \
+#   AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-3B-Instruct"); \
+#   AutoTokenizer.from_pretrained('Qwen/Qwen2.5-3B-Instruct"');"
+
+# Exponer el puerto del servicio
+EXPOSE 5000
+
+# Comando para iniciar vLLM con la configuración del dispositivo en CPU
+CMD ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "Qwen/Qwen2.5-3B-Instruct", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]

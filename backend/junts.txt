@@ -1,8 +1,9 @@
 # backend/main.py
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-import db  # Importació absoluta
-import models  # Importació absoluta
+from db import Base, engine, get_db  # Importació absoluta i clara
+from models import Proyecto
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -11,17 +12,58 @@ def read_root():
     return {"message": "Backend funciona!"}
 
 # Crear la base de dades (si no existeix)
-db.Base.metadata.create_all(bind=db.engine)
+Base.metadata.create_all(bind=engine)
 
 # Obtenir un projecte específic per ID
 @app.get("/proyectos/{proyecto_id}")
-def read_proyecto(proyecto_id: int, db: Session = Depends(db.get_db)):
-    proyecto = db.query(models.Proyecto).filter(models.Proyecto.id == proyecto_id).first()
+def read_proyecto(proyecto_id: int, db: Session = Depends(get_db)):
+    proyecto = db.query(Proyecto).filter(Proyecto.id == proyecto_id).first()
     return proyecto
+
+# Crear un projecte nou a la base de dades
+class ProyectoCreate(BaseModel):
+    organismo: str
+    nombre: str
+    linea: str
+    fecha_inicio: str
+    fecha_fin: str
+    anio: int
+    area: str
+    presupuesto_minimo: str
+    presupuesto_maximo: str
+    duracion_minima: str
+    duracion_maxima: str
+    tipo_financiacion: str
+    forma_y_plazo_de_cobro: str
+    minimis: str
+
+@app.post("/proyectos/", status_code=201)
+def create_proyecto(proyecto: ProyectoCreate, db: Session = Depends(get_db)):
+    db_proyecto = Proyecto(
+        organismo=proyecto.organismo,
+        nombre=proyecto.nombre,
+        linea=proyecto.linea,
+        fecha_inicio=proyecto.fecha_inicio,
+        fecha_fin=proyecto.fecha_fin,
+        anio=proyecto.anio,
+        area=proyecto.area,
+        presupuesto_minimo=proyecto.presupuesto_minimo,
+        presupuesto_maximo=proyecto.presupuesto_maximo,
+        duracion_minima=proyecto.duracion_minima,
+        duracion_maxima=proyecto.duracion_maxima,
+        tipo_financiacion=proyecto.tipo_financiacion,
+        forma_y_plazo_de_cobro=proyecto.forma_y_plazo_de_cobro,
+        minimis=proyecto.minimis
+    )
+    db.add(db_proyecto)
+    db.commit()
+    db.refresh(db_proyecto)
+    return db_proyecto
+
 # backend/db.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import base  # Canvia de .base a base per una importació absoluta
+from base import Base  # Importació clara de base.py
 
 # Configura la connexió a la base de dades
 SQLALCHEMY_DATABASE_URL = "postgresql://admin:adminpass@db:5432/cornucopia"
@@ -40,11 +82,13 @@ def get_db():
     finally:
         db.close()
 
+
+
 # backend/models.py
 from sqlalchemy import Column, Integer, String, Date
-import base  # Canvia de .db a base
+from base import Base  # Importació clara de base.py
 
-class Proyecto(base.Base):  # Usa Base des de base.py
+class Proyecto(Base):
     __tablename__ = "proyectos"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -62,8 +106,11 @@ class Proyecto(base.Base):  # Usa Base des de base.py
     tipo_financiacion = Column(String)
     forma_y_plazo_de_cobro = Column(String)
     minimis = Column(String)
+
+
 # backend/base.py
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+Base = declarative_base()  # Base per a la creació dels models
+
 

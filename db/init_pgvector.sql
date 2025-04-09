@@ -1,4 +1,4 @@
--- init_pgvector.sql
+-- db/init_pgvector.sql
 -- Crear l'extensió pgvector si no existeix
 CREATE EXTENSION IF NOT EXISTS vector;
 

@@ -1,0 +1,7 @@
+# crawler_rag/requirements.txt
+playwright
+asyncio
+requests
+psycopg2-binary
+langchain-community
+unstructured

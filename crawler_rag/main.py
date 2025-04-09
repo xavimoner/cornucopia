@@ -1,4 +1,4 @@
-# crawler/main.py
+# crawler_rag/main.py
 # docker exec -it crawler python /app/main.py
 
 import asyncio

@@ -1,0 +1,137 @@
+2025-04-08 11:37:11,588 - INFO - Llançant el navegador...
+2025-04-08 11:37:12,337 - INFO - Navegant a https://www.cdti.es/
+2025-04-08 11:37:14,641 - INFO - Tancant el popup de cookies...
+2025-04-08 11:37:15,059 - INFO - Clic a 'Ayudas y servicios'...
+2025-04-08 11:37:16,141 - INFO - Clic a 'Buscadores de ayudas'...
+2025-04-08 11:37:16,564 - INFO - Intentant clicar 'Matriz de ayudas'...
+2025-04-08 11:37:21,575 - WARNING - No s'ha pogut clicar 'Matriz de ayudas': Page.wait_for_selector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator("text=Matriz de ayudas") to be visible
+  -     14 × locator resolved to 2 elements. Proceeding with the first one: <a href="/matriz-de-ayudas">↵          Matriz de ayudas↵          </a>
+
+2025-04-08 11:37:21,576 - INFO - Fent fallback a 'Ver Matriz'...
+2025-04-08 11:37:23,014 - INFO - 'Ver Matriz' clicat correctament.
+2025-04-08 11:37:23,645 - INFO - Clicant targeta 'Proyectos de I + D'...
+2025-04-08 11:37:28,583 - INFO - Nova pàgina oberta: https://www.cdti.es/ayudas/proyectos-de-i-d
+2025-04-08 11:37:28,677 - INFO - Contingut complet de la pàgina web 'Proyectos de I + D' obtingut correctament.
+2025-04-08 11:37:28,678 - INFO - Primeres línies del contingut de la pàgina web:
+2025-04-08 11:37:28,678 - INFO - Proyectos de I + D | CDTI
+2025-04-08 11:37:28,678 - INFO - Pasar al contenido principal
+2025-04-08 11:37:28,678 - INFO - Main Menu
+2025-04-08 11:37:28,678 - INFO - EL CDTI
+2025-04-08 11:37:28,678 - INFO - EL CDTI
+2025-04-08 11:37:28,678 - INFO - Quiénes Somos
+2025-04-08 11:37:28,678 - INFO - Quiénes somos
+2025-04-08 11:37:28,678 - INFO - Valores Organizativos
+2025-04-08 11:37:28,678 - INFO - Estructura Organizativa
+2025-04-08 11:37:28,678 - INFO - Estructura organizativa
+2025-04-08 11:37:28,678 - INFO - Órganos rectores
+2025-04-08 11:37:28,678 - INFO - Comité de dirección
+2025-04-08 11:37:28,678 - INFO - Organigrama
+2025-04-08 11:37:28,679 - INFO - Consejo Asesor
+2025-04-08 11:37:28,679 - INFO - Plantilla
+2025-04-08 11:37:28,679 - INFO - Oficinas Internacionales CDTI
+2025-04-08 11:37:28,679 - INFO - Dónde estamos
+2025-04-08 11:37:28,679 - INFO - Alianzas
+2025-04-08 11:37:28,679 - INFO - Alianzas
+2025-04-08 11:37:28,679 - INFO - CLUB EXCELENCIA EN GESTIÓN
+2025-04-08 11:37:28,679 - INFO - Buscant enllaç PDF específic 'proyectos_de_id.pdf'...
+2025-04-08 11:37:28,721 - INFO - URL del PDF trobat: https://www.cdti.es/sites/default/files/2025-03/proyectos_de_id.pdf
+2025-04-08 11:37:28,721 - INFO - Descarregant PDF directament...
+2025-04-08 11:37:28,862 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,863 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,863 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,864 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,865 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,866 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,867 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,868 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,868 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,869 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,870 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,872 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,872 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,873 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,874 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,875 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,875 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,876 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,877 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,878 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,879 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,879 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,881 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,882 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,883 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,884 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,885 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,885 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,886 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,887 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,888 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,889 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,889 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,890 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,891 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,892 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,892 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,893 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,894 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,894 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,914 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:28,915 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,520 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,521 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,522 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - WARNING - CropBox missing from /Page, defaulting to MediaBox
+2025-04-08 11:37:35,523 - INFO - Contingut complet del PDF obtingut correctament.
+2025-04-08 11:37:35,524 - INFO - Primeres línies del contingut del PDF:
+2025-04-08 11:37:35,524 - INFO - REF.: Ficha proyectos de I+D
+2025-04-08 11:37:35,524 - INFO - Fecha: 02/01/2015
+2025-04-08 11:37:35,524 - INFO - Última modificación
+2025-04-08 11:37:35,524 - INFO - Texto principal: 27/02/2025 y Anexos: 29/11/2024
+2025-04-08 11:37:35,524 - INFO - PROYECTOS DE I+D
+2025-04-08 11:37:35,524 - INFO - Contenido
+2025-04-08 11:37:35,524 - INFO - 1. Definición. ............................................................................................................................................... 2
+2025-04-08 11:37:35,524 - INFO - 2. Tipología de proyectos de I+D. ............................................................................................................ 2
+2025-04-08 11:37:35,524 - INFO - 3. Entidades beneficiarias. ........................................................................................................................ 5
+2025-04-08 11:37:35,524 - INFO - 4. Efecto incentivador de la ayuda. ........................................................................................................ 7
+2025-04-08 11:37:38,758 - INFO - Navegador tancat.

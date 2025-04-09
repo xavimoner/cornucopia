@@ -1,14 +1,18 @@
 #!/bin/bash
-# install_pgvector.sh
+# db/install_pgvector.sh
 
-# Actualitzem els repositoris
-apt-get update -y
+echo "🔹 Instal·lant pgvector per a PostgreSQL..."
+
+# Actualitzem repositoris
+apt-get update
 
 # Instal·lem pgvector per a PostgreSQL 17
 apt-get install -y postgresql-17-pgvector
 
-# Si no existeix, creem extensió pgvector a la base de dades
+# Creem l'extensió dins la base de dades cornucopia
 psql -U admin -d cornucopia -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
-# Verifiquem que extensió pgvector s'ha creat 
+# Comprovació final
 psql -U admin -d cornucopia -c "SELECT * FROM pg_extension WHERE extname = 'vector';"
+
+echo "pgvector instal·lat i activat correctament."

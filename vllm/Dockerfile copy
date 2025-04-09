@@ -1,22 +1,20 @@
-# Dockerfile per vLLM
+# ./vllm/Dockerfile
+# Utilitzar una imatge base compatible amb Python 3.12
 FROM python:3.12-slim
 
-# Estableix el directori de treball
+# Establir directori de treball
 WORKDIR /workspace
 
-# Instal·la dependències bàsiques
+# Instal·lar dependències bàsiques
 RUN apt-get update && apt-get install -y \
     git gcc-12 g++-12 libnuma-dev libtcmalloc-minimal4 \
     && rm -rf /var/lib/apt/lists/*
 
-# Configura el directori per als models
-ENV VLLM_CACHE_DIR=/root/.cache/huggingface
-
-# Actualitza alternatives per utilitzar gcc-12
+# Actualitzar alternatives per usar gcc-12
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 10 \
     --slave /usr/bin/g++ g++ /usr/bin/g++-12
 
-# Instala vLLM des del codi font
+# Instal·lar vLLM des de codi font
 RUN git clone https://github.com/vllm-project/vllm.git vllm_source && \
     cd vllm_source && \
     pip install --upgrade pip && \
@@ -24,16 +22,21 @@ RUN git clone https://github.com/vllm-project/vllm.git vllm_source && \
     pip install -v -r requirements/cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu && \
     VLLM_TARGET_DEVICE=cpu python setup.py install
 
-# Instal·la transformers i altres dependències
+# Configurar Hugging Face cache
+RUN mkdir -p /root/.cache/huggingface
+VOLUME /root/.cache/huggingface
+
+# Instal·lar transformers i altres paquets de Hugging Face
 RUN pip install torch transformers huggingface-hub vllm
 
-# Descarrega el model des de Hugging Face
+# Baixar el model DeepSeek-R1-Distill-Qwen-1.5B
 RUN python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; \
-    AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-3B-Instruct'); \
-    AutoTokenizer.from_pretrained('Qwen/Qwen2.5-3B-Instruct');"
+    AutoModelForCausalLM.from_pretrained('deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B'); \
+    AutoTokenizer.from_pretrained('deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B');"
 
-# Exposa el port per al servei vLLM
+# Exposar el port del servei
 EXPOSE 5000
 
-# Comanda per executar vLLM amb la configuració del dispositiu en CPU
-CMD ["vllm", "serve", "--device", "cpu", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
+# Comanda per arrencar vLLM
+CMD ["vllm", "serve", "--device", "cpu", "--trust-remote-code", "$VLLM_MODEL"]
+

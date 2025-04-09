@@ -1,4 +1,4 @@
-# ./crawler/Dockerfile
+# ./crawler_rag/Dockerfile
 FROM ubuntu:24.04
 
 WORKDIR /app
