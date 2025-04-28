@@ -1,5 +1,27 @@
 # docker-copmpose.yml
+
 services:
+  # Servei vllm desactivat temporalment: actualment fem servir Azure OpenAI
+  # vllm:
+  #   build: ./vllm
+  #   container_name: vllm
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}
+  #   volumes:
+  #     - ~/.cache/huggingface:/root/.cache/huggingface
+  #   networks:
+  #     - cornucopia_network
+  #   restart: unless-stopped
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - capabilities: [gpu]
+  #   env_file:
+  #     - .env
+
   backend:
     build: ./backend
     container_name: backend
@@ -13,7 +35,7 @@ services:
       - cornucopia_network
     restart: unless-stopped
     environment:
-      - ENVIRONMENT=development  
+      - ENVIRONMENT=development
     command: ["sh", "-c", "until nc -z -v -w30 db 5432; do echo 'Esperant DB...'; sleep 1; done; uvicorn main:app --host 0.0.0.0 --port 8000"]
 
   crawler_rag:
@@ -29,8 +51,9 @@ services:
       - cornucopia_network
     restart: unless-stopped
     environment:
-      - ENVIRONMENT=development  
-    # command: ["python", "main.py"]
+      - ENVIRONMENT=development
+    env_file:
+      - .env
 
   db:
     image: postgres:latest
@@ -44,9 +67,9 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
-      - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql
-      - ./db/install_pgvector.sh:/docker-entrypoint-initdb.d/install_pgvector.sh
+      - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/01_init_pgvector.sql
+      - ./db/init_db_schema.sql:/docker-entrypoint-initdb.d/02_init_db_schema.sql
+      - ./db/install_pgvector.sh:/docker-entrypoint-initdb.d/install_pgvector.sh  
     networks:
       - cornucopia_network
     command: ["/bin/bash", "-c", "/docker-entrypoint-initdb.d/install_pgvector.sh && docker-entrypoint.sh postgres"]
@@ -58,3 +81,4 @@ networks:
 volumes:
   postgres_data:
   models:
+

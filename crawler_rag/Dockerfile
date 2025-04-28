@@ -1,5 +1,5 @@
-# ./crawler_rag/Dockerfile
-FROM ubuntu:24.04
+# crawler_rag/Dockerfile
+FROM ubuntu:22.04
 
 WORKDIR /app
 
@@ -31,7 +31,7 @@ RUN pip install --upgrade pip setuptools wheel
 # Instal·lem les dependències de Python
 RUN pip install --no-cache-dir -r requirements.txt
 # RUN pip install smolagents[vllm]
-RUN pip install 'accelerate>=0.26.0'  # Afegir aquesta línia
+# RUN pip install 'accelerate>=0.26.0'  # Afegir aquesta línia
 
 # Instal·lem Playwright
 RUN playwright install --with-deps

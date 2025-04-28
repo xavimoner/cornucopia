@@ -1,6 +1,6 @@
 # backend/Dockerfile
 
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 # Configurar el directori de treball
 WORKDIR /app
@@ -27,7 +27,7 @@ RUN pip install --upgrade pip setuptools wheel --timeout 120 --no-cache-dir
 RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 --timeout 120
 
 # 🔹 Configurar `accelerate` per CPU abans d’instal·lar-lo
-RUN python -c "from accelerate.utils import write_basic_config; write_basic_config(mixed_precision='fp16', compute_environment='LOCAL_MACHINE', use_cpu=True)"
+# RUN python -c "from accelerate.utils import write_basic_config; write_basic_config(mixed_precision='fp16', compute_environment='LOCAL_MACHINE', use_cpu=True)"
 
 # 🔹 Instal·lar `accelerate` després de configurar-lo
 RUN pip install --no-cache-dir "accelerate>=0.26.0" --no-deps --timeout 120

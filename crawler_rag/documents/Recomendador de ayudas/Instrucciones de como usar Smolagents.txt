@@ -1,0 +1,29 @@
+1) Instalar Visual Studio Code
+2) Importar el repositorio de git:
+https://github.com/huggingface/smolagents/tree/main
+
+Te pedirá que donde lo quieres alojar en local Ej: C:/smolmagents
+
+3) Instalar anaconda para gestionar los paquetes de Python.
+
+
+4) Crear un entorno
+conda create -n smolagents python=3.11
+
+5) Activar el entonrno recien creado
+conda activate smolagents
+
+6) Intalar las librerias necesarias para el ejemplo concreto
+Ej: pip install smolagents
+
+7) Para ejecutar modelos directamente de Huggingface debemos de tener una variable de entorno que nos de la propia plataforma, para ello debemos:
+7.1) Crear cuenta en https://huggingface.co
+7.2) Ir a la parte de settings y buscar el menu "Access Token", se encuentra en la ruta: https://huggingface.co/settings/tokens
+7.3) Meter el token manualmente:
+Ejecutar el comando: huggingface-cli login
+Y copiar lo que ponte en el token usar el boton derecho del ratón para copiar el token
+
+
+8) Ejecutar la aplicacion
+cd c:\smolagents\smolagents\examples
+python multiple_tools.py

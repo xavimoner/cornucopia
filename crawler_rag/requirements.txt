@@ -1,7 +1,31 @@
-# crawler_rag/requirements.txt
-playwright
-asyncio
+# Navegació i scraping
+playwright==1.43.0
 requests
+
+# Tractament de PDFs i HTML
+pdfplumber
+beautifulsoup4
+lxml
+
+# Connexió PostgreSQL
 psycopg2-binary
-langchain-community
-unstructured
+
+# Azure OpenAI
+openai
+python-dotenv
+
+# Utilitats addicionals
+textwrap3  # suport millorat de textwrap
+
+
+tabulate
+google-adk
+
+azure-core
+
+tiktoken
+pdfplumber
+
+pandas
+
+

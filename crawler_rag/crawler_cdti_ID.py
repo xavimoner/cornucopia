@@ -129,6 +129,18 @@ async def run(playwright):
     #
     # Aquestes variables es poden utilitzar per a futures operacions.
 
+    # Inserir a la base de dades
+    from crawler_rag.utils.insert_full_entry import insert_full_entry
+
+    insert_full_entry(
+        organismo="CDTI",
+        nombre="Proyectos de I+D - CDTI",
+        web_text=web_content_text,
+        pdf_text=pdf_content_text
+)
+
+
+
     await asyncio.sleep(3)
     await browser.close()
     logging.info("Navegador tancat.")

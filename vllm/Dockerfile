@@ -1,39 +1,29 @@
-# Dockerfile per vLLM
-FROM python:3.12-slim
+# vllm/Dockerfile
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
 
-# Estableix el directori de treball
 WORKDIR /workspace
 
-# Instal·la dependències bàsiques
 RUN apt-get update && apt-get install -y \
-    git gcc-12 g++-12 libnuma-dev libtcmalloc-minimal4 \
-    && rm -rf /var/lib/apt/lists/*
+    git gcc g++ libnuma-dev libtcmalloc-minimal4 \
+    python3 python3-pip python3-venv && \
+    rm -rf /var/lib/apt/lists/*
 
-# Configura el directori per als models
 ENV VLLM_CACHE_DIR=/root/.cache/huggingface
 
-# Actualitza alternatives per utilitzar gcc-12
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 10 \
-    --slave /usr/bin/g++ g++ /usr/bin/g++-12
+RUN python3 -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
-# Instala vLLM des del codi font
+RUN pip install --upgrade pip && \
+    pip install torch --index-url https://download.pytorch.org/whl/cu121 && \
+    pip install "cmake>=3.26" wheel packaging ninja "setuptools-scm>=8" numpy
+
 RUN git clone https://github.com/vllm-project/vllm.git vllm_source && \
     cd vllm_source && \
-    pip install --upgrade pip && \
-    pip install "cmake>=3.26" wheel packaging ninja "setuptools-scm>=8" numpy && \
-    pip install -v -r requirements/cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu && \
-    VLLM_TARGET_DEVICE=cpu python setup.py install
+    pip install -r requirements.txt && \
+    VLLM_TARGET_DEVICE=cuda python setup.py install
 
-# Instal·la transformers i altres dependències
-RUN pip install torch transformers huggingface-hub vllm
+RUN pip install vllm transformers huggingface-hub
 
-# Descarrega el model des de Hugging Face
-RUN python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; \
-    AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-3B-Instruct'); \
-    AutoTokenizer.from_pretrained('Qwen/Qwen2.5-3B-Instruct');"
-
-# Exposa el port per al servei vLLM
 EXPOSE 5000
 
-# Comanda per executar vLLM amb la configuració del dispositiu en CPU
-CMD ["vllm", "serve", "--device", "cpu", "--port", "5000", "--max-model-len", "4096", "--dtype", "float32"]
+CMD ["vllm", "serve", "--device", "cuda", "--model", "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B", "--trust-remote-code", "--port", "5000", "--max-model-len", "4096", "--dtype", "float16"]
