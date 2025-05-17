@@ -1,0 +1,47 @@
+# .gitignore
+######################################
+# Fitxers de configuració sensibles
+######################################
+.env
+.env.deploy
+debug*
+.env*
+deploy_to_azure.sh 
+build_local_images.sh
+crawler_rag/.env*
+backend/.env*
+
+######################################
+# Fitxers generats per Python
+######################################
+__pycache__/
+*.pyc
+
+######################################
+# Fitxers de registre i logs
+######################################
+*.log
+logs/
+
+######################################
+# Fitxers temporals de sistema
+######################################
+*.DS_Store
+
+######################################
+# Directories específiques de Cornucopia
+######################################
+vault/
+tests/
+vllm/
+ollama/
+
+######################################
+# Documents reals de proves (opcional)
+######################################
+documents/
+
+
+
+
+

@@ -1,0 +1,57 @@
+# setup.txt
+
+# Configuración rápida de Cornucopia
+
+1. Clonar el repositorio:
+
+git clone https://github.com/xavimoner/cornucopia.git  
+cd cornucopia
+
+2. Crear el archivo `.env` en la raíz:
+
+- Variables necesarias:
+  - DATABASE_URL
+  - AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_VERSION
+  - (Opcional) GEMINI_API_KEY y GEMINI_MODEL
+  - DOCUMENTS_DIR=crawler_rag/documents
+
+3. Construir y levantar los contenedores:
+
+docker compose up -d --build
+
+4. Comprobar que los contenedores `db`, `backend` y `crawler_rag` están en ejecución:
+
+docker ps
+
+5. Subir documentos PDF o Word dentro de:
+
+crawler_rag/documents/Nombre_Convocatoria/
+
+Ejemplo:
+
+crawler_rag/documents/CDTI - PID Individual/Convocatoria_PID.pdf
+
+6. Vectorizar documentos:
+
+docker exec -it crawler_rag bash  
+python scripts/insert_documents_from_folder.py
+
+(para solo una subcarpeta:)
+
+python scripts/insert_documents_from_folder.py --subfolder "CDTI - PID Individual"
+
+7. Ejecutar la extracción de campos:
+
+python scripts/run_extraction.sh
+
+8. Consultar resultados:
+
+python scripts/list_convocatorias.py
+
+9. Reiniciar la base de datos (opcional):
+
+bash scripts/reset_schema.sh
+
+10. Test de conexión a la base de datos:
+
+python scripts/test_db_connection.py

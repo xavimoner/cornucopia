@@ -1,0 +1,40 @@
+<! -- # frontend/index.html --> 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cornucopia · Consultor inteligente de subvenciones</title>
+
+  <!-- Tipografía Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main-container">
+    <div class="card">
+      <img src="logo.png" alt="Cornucopia" class="logo" />
+
+      <h1>Buscador inteligente de subvenciones</h1>
+      <p class="subtext">Consulta en lenguaje natural y encuentra ayudas en segundos</p>
+
+      <form id="chat-form">
+        <input
+          type="text"
+          id="pregunta"
+          placeholder="Busca ayudas para IA, energía, start-ups o proyectos europeos..."
+          required />
+        <button type="submit">Consultar</button>
+      </form>
+
+      <p id="modelo-activo" class="subtext" style="margin-top: 1em; font-style: italic;"></p>
+
+      <div id="resposta-container">
+        <pre id="resposta"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

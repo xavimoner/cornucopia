@@ -1,0 +1,79 @@
+# docker-copmpose.yml
+services:
+  
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - cornucopia_network
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - backend
+    restart: unless-stopped
+    
+  backend:
+    build: ./backend
+    container_name: backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    #volumes:
+    #  - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=development
+    command: ["sh", "-c", "until nc -z -v -w30 db 5432; do echo 'Esperant DB...'; sleep 1; done; uvicorn main:app --host 0.0.0.0 --port 8000"]
+
+  crawler_rag:
+    build: ./crawler_rag
+    container_name: crawler_rag
+    volumes:
+      - ./crawler_rag:/app
+      - ./crawler_rag/documents:/app/documents
+      - ./.env:/app/.env 
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=development
+    env_file:
+      - .env
+
+  db:
+    image: postgres:latest
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: cornucopia
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/01_init_pgvector.sql
+      - ./db/init_db_schema.sql:/docker-entrypoint-initdb.d/02_init_db_schema.sql
+      - ./db/install_pgvector.sh:/docker-entrypoint-initdb.d/install_pgvector.sh  
+    networks:
+      - cornucopia_network
+    command: ["/bin/bash", "-c", "/docker-entrypoint-initdb.d/install_pgvector.sh && docker-entrypoint.sh postgres"]
+
+networks:
+  cornucopia_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  models:

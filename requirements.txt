@@ -1,0 +1,5 @@
+# .env
+# requiremnents global
+python-dotenv
+azure-core
+openai 
