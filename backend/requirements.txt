@@ -1,0 +1,39 @@
+# backend/requirements.txt
+# API i models
+openai>=1.0.0,<2.0.0
+tiktoken>=0.7.0
+python-dotenv==1.0.1
+google-adk
+google-genai==1.15.0
+litellm>=1.68.2
+
+# Connexió i accés a PostgreSQL
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.25
+pgvector
+asyncpg==0.29.0
+
+# Embeddings i vectorització
+sentence-transformers==2.2.2
+
+# Extracció de text de PDF
+pdfplumber==0.10.2
+PyPDF2==3.0.1
+
+# Web scraping i navegador
+playwright==1.41.2
+beautifulsoup4==4.12.3
+requests
+
+# Tractament de dades
+pandas==2.2.2
+httpx>=0.28.1,<1.0.0
+
+# Servei d’API amb FastAPI (versió compatible amb ADK)
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.28.0,<1.0.0
+
+# Seguretat / JWT
+python-jose[cryptography]==3.3.0 
+passlib[bcrypt]==1.7.4          #  hashing
+bcrypt==4.0.1

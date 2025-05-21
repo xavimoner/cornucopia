@@ -1,0 +1,2 @@
+# Executar cada dia a les 3:05 AM
+5 3 * * * root /app/scripts/run_pending_extraction.sh >> /app/logs/cron_general_output.log 2>&1

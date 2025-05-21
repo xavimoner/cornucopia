@@ -1,0 +1,87 @@
+# docker-compose.yml
+services:
+  
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - cornucopia_network
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - backend
+    restart: unless-stopped
+    
+  backend:
+    build: ./backend
+    container_name: backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+    #  - ./backend:/app
+    # x documents descarregats (crawler_rag/documents):
+      - ./crawler_rag/documents:/app/shared_documents_output 
+    depends_on:
+      - db
+    networks:
+      - cornucopia_network
+    
+    environment:
+      - ENVIRONMENT=development
+    #command: ["sh", "-c", "until pg_isready -h db -p 5432 -U admin -d cornucopia -q; do echo 'Esperant que PostgreSQL estigui llest a db:5432...'; sleep 2; done; echo 'PostgreSQL està llest!'; python -m uvicorn main:app --host 0.0.0.0 --port 8000"]
+    #command: ["sh", "-c", "echo 'Contenedor backend iniciado para inspección. PATH es: $PATH y PYTHONPATH es: $PYTHONPATH' ; echo 'Ejecuta: docker exec -it backend bash' ; tail -f /dev/null"]
+    command: ["sh", "-c", "until pg_isready -h db -p 5432 -U admin -d cornucopia -q; do echo 'Esperant que PostgreSQL estigui llest a db:5432...'; sleep 2; done; echo 'PostgreSQL està llest!'; python -m uvicorn main:app --host 0.0.0.0 --port 8000"]
+
+    restart: unless-stopped 
+    #restart: "no"
+
+
+
+  crawler_rag:
+    build: ./crawler_rag
+    container_name: crawler_rag
+    volumes:
+      - ./crawler_rag:/app
+      - ./crawler_rag/documents:/app/documents 
+      - ./.env:/app/.env # Munta el .env dins del contenidor del crawler
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+    networks:
+      - cornucopia_network
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=development
+    
+
+  db:
+    image: pgvector/pgvector:pg16 
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: cornucopia
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass # variables configuren la BD a la primera arrencada
+    ports:
+      - "5432:5432" # Exposa el port de PostgreSQL al host
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Script per crear l'extensió pgvector 
+      - ./db/init_pgvector.sql:/docker-entrypoint-initdb.d/01_init_pgvector.sql 
+      # Script per crear les teves taules 
+      - ./db/init_db_schema.sql:/docker-entrypoint-initdb.d/02_init_db_schema.sql
+    networks:
+      - cornucopia_network
+
+networks:
+  cornucopia_network:
+    driver: bridge 
+
+volumes:
+  postgres_data: {} # NO SÉ SI CAL X persistència de PostgreSQL
+  # models: # Aquest EN DESÚS X VLLM I OLLAMA

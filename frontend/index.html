@@ -1,0 +1,94 @@
+
+<! -- # frontend/index.html --> 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cornucopia · Consultor inteligente de subvenciones</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main-container">
+    <div class="card">
+      <img src="logo.png" alt="Cornucopia" class="logo" />
+
+      <div id="user-info-container">
+        <p id="user-info"></p> 
+        <button id="logout-button" style="display: none;">Logout</button>
+      </div>
+
+      <div id="login-section">
+        <h2>Iniciar Sesión</h2>
+        <form id="login-form">
+          <div>
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Tu usuario" required />
+          </div>
+          <div>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Tu contraseña" required />
+          </div>
+          <button type="submit">Login</button>
+          <p id="login-error" class="error-message"></p>
+        </form>
+      </div>
+
+      <div id="chat-section" style="display: none;">
+        <h1>Buscador inteligente de subvenciones</h1>
+        <p class="subtext">Consulta en lenguaje natural y encuentra ayudas en segundos</p>
+        <form id="chat-form">
+          <input
+            type="text"
+            id="pregunta"
+            placeholder="Busca ayudas para IA, energía, start-ups o proyectos europeos..."
+            required 
+          />
+          <button type="submit">Consultar</button>
+        </form>
+        <p id="modelo-activo" class="subtext" style="margin-top: 1em; font-style: italic;"></p>
+        <div id="resposta-container">
+          <pre id="resposta"></pre>
+        </div>
+      </div>
+
+      <div id="admin-section" style="display: none; margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+        <h2>Panel de Administración</h2>
+        
+        <form id="ingest-form">
+          <h3>Ingestar Nueva Convocatoria desde URL</h3>
+          <div>
+            <label for="convocatoria-url">URL de la Convocatoria:</label>
+            <input type="url" id="convocatoria-url" name="convocatoria_url" placeholder="https://ejemplo.com/convocatoria" required />
+          </div>
+          <div>
+            <label for="convocatoria-nombre">Nombre para la Convocatoria (usado para carpeta):</label>
+            <input type="text" id="convocatoria-nombre" name="convocatoria_nombre" placeholder="Ej: Ayudas Innovación 2025" required />
+          </div>
+          <button type="submit">Verificar y Descargar Archivos</button>
+          <p id="ingest-status" class="status-message" style="min-height:1.2em; margin-top:0.5rem;"></p>
+        </form>
+
+<div id="file-management-section" style="display: none; margin-top: 1.5rem; text-align: left; border-top: 1px dashed #ccc; padding-top: 1rem;">
+          <h3>Archivos Obtenidos para "<span id="current-ingesting-convocatoria-name"></span>"</h3>
+          <ul id="retrieved-files-list">
+            </ul>
+          
+          <h4>Subir Archivos Adicionales (PDF, TXT, MD, DOCX)</h4>
+          <form id="upload-additional-files-form"> 
+            <input type="file" id="additional-files-input" multiple 
+                   accept=".pdf,.txt,.md,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <button type="submit">Subir Archivos Seleccionados</button> 
+            <p id="upload-status" class="status-message"></p>
+          </form> 
+
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <button id="confirm-process-button" class="button button-process">Confirmar...</button>
+            <button id="cancel-ingest-button" class="button button-cancel">Cancelar...</button>
+            <p id="process-status" class="status-message"></p>
+          </div>
+        </div>
+        </div> </div> </div> <script src="script.js"></script>
+</body>
+</html>
